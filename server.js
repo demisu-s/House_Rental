@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB=require("./config/db")
 const userRoutes = require('./routes/userRoute');
+// const houseRoutes = require('./routes/houseRoute');
 const app = express();
 
 require('dotenv').config();
@@ -11,7 +12,7 @@ app.use(express.json())
 
 //routes here
 app.use('/api/users', userRoutes);
-
+// app.use('/api/house', houseRoutes);
 
 //starting server
 app.listen(port, (err) => {

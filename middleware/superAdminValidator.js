@@ -3,7 +3,7 @@ const superAdminValidator=(req,res,next)=>{
         next();
     }
     else{
-        res.this.status(403).json({error:"Available for superAdmin Only"})
+        res.status(403).json({error:"Available for superAdmin Only"})
     }
 }
 module.exports={

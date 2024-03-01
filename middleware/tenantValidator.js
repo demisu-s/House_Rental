@@ -3,7 +3,7 @@ const tenantValidator=(req,res,next)=>{
         next();
     }
     else{
-        res.this.status(403).json({error:"Available for Tenant Only"})
+        res.status(403).json({error:"Available for Tenant Only"})
     }
 }
 module.exports={

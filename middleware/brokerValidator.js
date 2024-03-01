@@ -3,7 +3,7 @@ const brokerValidator=(req,res,next)=>{
         next();
     }
     else{
-        res.this.status(403).json({error:"Available for broker"})
+        res.status(403).json({error:"Available for broker"})
     }
 }
 module.exports={

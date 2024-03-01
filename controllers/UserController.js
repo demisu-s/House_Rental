@@ -51,6 +51,20 @@ const allUsers = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" }); 
   }
 };
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.userId; 
+    const user = await User.findByIdAndDelete(userId);
+    
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    
+    res.json(user); 
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" }); 
+  }
+};
 
 
 const generateToken = (id) => {
@@ -61,5 +75,6 @@ module.exports = {
   register,
   login,
   Profile,
-  allUsers
+  allUsers,
+  deleteUser
 };
