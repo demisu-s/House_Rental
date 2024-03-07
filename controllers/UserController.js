@@ -7,8 +7,8 @@ const userModel = require("../models/userModel");
 const register = async (req, res) => {
   try {
     // check if all fields are added
-    const { firstName, lastName, email, password, role } = req.body;
-    if (!firstName || !lastName || !email || !password || !role) {
+    const { firstName, lastName, email, password, address, role } = req.body;
+    if (!firstName || !lastName || !email || !password || !address || !role) {
       res.status(400).json({ error: "Please include all fields" });
     }
     // check if user already exists or not
@@ -91,4 +91,11 @@ const logout = (req, res) => {
   res.json({ message: "User logged out successfully" });
 };
 
-module.exports = { register, login, getProfile, getAllProfile, logout };
+module.exports = {
+  register,
+  login,
+  getProfile,
+  getAllProfile,
+  address,
+  logout,
+};

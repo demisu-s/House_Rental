@@ -17,7 +17,7 @@ const { landlordValidator } = require("../middleware/landlordValidator");
 router.post("/", protect, landlordValidator, registerHouse);
 router.get("/", getHouses);
 router.get("/:id", getHouseById); // Get a specific house by ID
-router.patch("/:id", protect, landlordValidator, updateHouse);
+router.put("/:id", protect, landlordValidator, updateHouse);
 router.delete("/:id", protect, landlordValidator, deleteHouse);
 
 module.exports = router;

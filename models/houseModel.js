@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const HouseSchema = new mongoose.Schema(
   {
+    // need to add some tasks
     title: {
       type: String,
       required: true,
@@ -27,6 +28,9 @@ const HouseSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    // photo: {
+
+    // }
   },
   {
     timestamps: true,

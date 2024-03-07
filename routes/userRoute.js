@@ -16,4 +16,7 @@ router.post("/logout", logout);
 router.get("/profile", protect, getProfile);
 router.get("/allprofiles", protect, adminValidator, getAllProfile);
 
+// routes for admin
+
+
 module.exports = router;
