@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 
 const HouseSchema = new mongoose.Schema(
   {
-    // need to add some tasks
+    // need to add some taskss
     title: {
       type: String,
       required: true,
