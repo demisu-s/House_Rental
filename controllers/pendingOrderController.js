@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const PendingOrder = require("../models/pendingOrderModel");
-const asyncHandler = require("express-async-handler");
 
 const createPendingOrder = asyncHandler(async (req, res) => {
   const { tenantID, date, bidPrice, houseEntityID } = req.body;
