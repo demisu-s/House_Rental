@@ -5,7 +5,7 @@ const houseController = require('../controllers/houseController');
 
 router.get('/', houseController.getAllHouses);
 router.get('/:id', houseController.getHouseById);
-router.post('/', houseController.createHouse);
+router.post('/', houseController.newHouse);
 router.put('/:id', houseController.updateHouse);
 router.delete('/:id', houseController.deleteHouse);
 
