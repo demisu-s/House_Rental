@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5 }, // 5 MB limit
+  limits: { fileSize: 1024 * 1024 * 8 }, // 5 MB limit
   fileFilter: function(req, file, cb) {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
@@ -37,7 +37,7 @@ const register = async (req, res) => {
       return res.status(400).json({ error: err.message });
     }
 
-    const { firstName, lastName, location, phone, email, password, role } = req.body;
+    const { firstName, lastName, address, phone, email, password, role } = req.body;
     if (!req.file) {
       return res.status(400).json({ error: "Profile image is required" });
     }
@@ -48,7 +48,7 @@ const register = async (req, res) => {
     const user = await User.create({
       firstName,
       lastName,    
-      location,
+      address,
       phone,
       email,
       password: hashedPassword,
@@ -86,7 +86,7 @@ const Profile = (req, res) => {
   res.json(req.user);
 };
 
-const allUsers = async (req, res) => {
+const allUsers = async (req, res) => {   
   try {
     const users = await User.find();
     res.json(users);
@@ -109,6 +109,58 @@ const deleteUser = async (req, res) => {
   }
 };
 
+
+const forgotPassword=async (req, res) => {
+  try {
+      const { email } = req.body;
+      const user = await User.findOne({ email });
+
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Generate reset token
+      const resetToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+      res.json({ message: 'Reset email sent successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}; 
+
+
+
+const resetPassword=async (req, res) => {
+    try {
+        const { token, newPassword } = req.body;
+
+        // Verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.userId;
+
+        // Find user by id
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Update password
+        user.password = newPassword;
+        await user.save();
+
+        res.json({ message: 'Password reset successful' });
+    } catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            return res.status(400).json({ error: 'Reset token has expired' });
+        }
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
@@ -118,6 +170,8 @@ module.exports = {
   login,
   Profile,
   allUsers,
-  deleteUser
+  deleteUser,
+  forgotPassword,
+  resetPassword
 };
    

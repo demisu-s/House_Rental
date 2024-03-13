@@ -1,5 +1,5 @@
-const superAdminValidator=(req,res,next)=>{
-    if(req.user.role==="superAdmin"){
+const superAdminAuthorization=(req,res,next)=>{
+    if(req.user.role==="SuperAdmin"){
         next();
     }
     else{
@@ -7,5 +7,5 @@ const superAdminValidator=(req,res,next)=>{
     }
 }
 module.exports={
-    superAdminValidator,
+    superAdminAuthorization,
 }

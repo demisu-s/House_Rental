@@ -1,5 +1,5 @@
-const brokerValidator=(req,res,next)=>{
-    if(req.user.role==="broker"){
+const brokerAuthorization=(req,res,next)=>{
+    if(req.user.role==="Broker"){
         next();
     }
     else{
@@ -7,5 +7,5 @@ const brokerValidator=(req,res,next)=>{
     }
 }
 module.exports={
-    brokerValidator,
+    brokerAuthorization,
 }

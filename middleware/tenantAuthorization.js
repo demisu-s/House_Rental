@@ -1,5 +1,5 @@
-const tenantValidator=(req,res,next)=>{
-    if(req.user.role==="tenant"){
+const tenantAuthorization=(req,res,next)=>{
+    if(req.user.role==="Tenant"){
         next();
     }
     else{
@@ -7,5 +7,5 @@ const tenantValidator=(req,res,next)=>{
     }
 }
 module.exports={
-    tenantValidator,
+    tenantAuthorization,
 }

@@ -4,15 +4,17 @@ const userSchema = mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     phone: { type: Number },
-    location: { type: String },
-    email: { type: String, required: true, unique: true },
+    address: { type: String },
+    email: { type: String, required: true },
     password: { type: String, required: true },
     role: {
         type: String,
-        enum: ["user", "admin", "broker", "superAdmin", "tenant"],
-        default: "user"
+        enum: ["Landlord", "Tenant", "Admin", "Broker", "SuperAdmin"],
+        default: "Tenant"
     },
-    profileImagePath: { type: String, default: "" }
+    profileImagePath: { type: String, default: "" },
+    blocked: { type: Boolean, default: false }, 
+    verified: { type: Boolean, default: false },
 }, {
     timestamps: true
 });
