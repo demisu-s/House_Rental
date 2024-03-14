@@ -28,8 +28,9 @@ const houseSchema = mongoose.Schema({
     property_type: {
         type: String
     },
-    images: {
-        type: Buffer
+    houseImagePaths: {
+        type: Buffer,
+        default:""
     },
    
     broker: {

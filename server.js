@@ -1,7 +1,8 @@
 const express = require("express");
 const connectDB=require("./config/db")
 const userRoutes = require('./routes/userRoute');
-// const houseRoutes = require('./routes/houseRoute');
+// const houseModel = require("./models/houseModel");
+const houseRoutes = require('./routes/houseRoute');
 const app = express();
 
 require('dotenv').config();
@@ -11,6 +12,7 @@ const port = process.env.PORT || 4000;
 app.use(express.json())
 
 //routes here
+app.use('/api/houses',houseRoutes)
 app.use('/api/users', userRoutes);
 // app.use('/api/house', houseRoutes);
 
