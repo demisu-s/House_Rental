@@ -29,7 +29,8 @@ const houseSchema = mongoose.Schema({
         type: String
     },
     images: {
-        type: Buffer
+        data: Buffer,
+        contentType: String
     },
     tenant: {
         type: mongoose.Schema.Types.ObjectId,

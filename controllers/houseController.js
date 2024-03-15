@@ -1,4 +1,5 @@
 const House = require('../models/houseModel')
+const multer = require('multer')
 
 exports.getAllHouses = async (req, res) => {
     try{
@@ -23,6 +24,17 @@ exports.getHouseById = async (req,res) => {
     }
 }
 
+const Storage = multer.diskStorage({
+    destination: "uploads",
+    filename: (req, file, cb)=>{
+        cb(null, file.originalname)
+    },
+})
+
+const upload = multer({
+    storage: Storage
+}).single('photo')
+
 exports.newHouse = async (req, res) => {
     const house = new House({
         title: req.body.title,
@@ -33,7 +45,17 @@ exports.newHouse = async (req, res) => {
         bathrooms: req.body.bathrooms,
         price: req.body.price,
         property_type: req.body.property_type,
-        images: req.body.images,
+        images: {
+            data: upload(req,res,(err)=>{
+                if(err){
+                    console.log(err)
+                }
+                else{
+                    req.file.filename
+                }
+            }),
+            contentType: 'image/jpg'
+        },
         tenant: req.body.tenant,
         broker: req.body.broker,
     })
@@ -57,7 +79,17 @@ exports.updateHouse = async (req, res) => {
         bathrooms: req.body.bathrooms,
         price: req.body.price,
         property_type: req.body.property_type,
-        images: req.body.images,
+        images: {
+            data: upload(req,res,(err)=>{
+                if(err){
+                    console.log(err)
+                }
+                else{
+                    req.file.filename
+                }
+            }),
+            contentType: 'image/jpg'
+        },
         tenant: req.body.tenant,
         broker: req.body.broker,
     }
