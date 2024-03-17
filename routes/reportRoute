@@ -13,7 +13,7 @@ const {
 
 // Routes for reports
 router.post(
-  "/",
+  "/:id",
   [landlordValidator, brokerValidator, tenantValidator],
   protect,
   createReport
