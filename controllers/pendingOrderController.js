@@ -3,6 +3,23 @@ const asyncHandler = require("express-async-handler");
 const PendingOrder = require("../models/pendingOrderModel");
 const asyncHandler = require("express-async-handler");
 
+const createNotification = async (recipientId, message, details, status) => {
+  try {
+    // Create a new notification in the database
+    const notification = await Notification.create({
+      recipient: recipientId,
+      message,
+      details,
+      status: status || "unread", // Default status to 'unread' if not provided
+    });
+
+    return notification;
+  } catch (error) {
+    console.error("Error creating notification:", error);
+    throw new Error("Failed to create notification");
+  }
+};
+
 const createPendingOrder = asyncHandler(async (req, res) => {
   const { tenantID, date, bidPrice, houseEntityID } = req.body;
 
