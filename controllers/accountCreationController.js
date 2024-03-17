@@ -56,7 +56,7 @@ const updateUser = async (req, res) => {
         return res.status(403).json({ error: 'You cannot delete your own account' });
       }
   
-      // Optional: Implement account deactivation instead of deletion
+      // We can Implement account deactivation instead of deletion
       // await User.findByIdAndUpdate(id, { active: false });
   
       await User.findByIdAndDelete(id);

@@ -14,8 +14,8 @@ const {brokerAuthorization}=require("../middleware/brokerAuthorization")
 
 // Routes for houses
 router.post("/", protect, [landlordAuthorization,brokerAuthorization], registerHouse);
-router.get("/", getAllHouses);
-router.get("/:id", getAllHouse); // Get a specific house by ID only broker or landlord can see
+router.get("/",getAllHouses);
+router.get("/yourHouse",protect, getAllHouse); // Get a specific house by ID only broker or landlord can see
 router.put("/:id", protect, [landlordAuthorization,brokerAuthorization], updateHouseById);
 router.delete("/:id", protect, [landlordAuthorization,brokerAuthorization], deleteHouseById);
 

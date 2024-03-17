@@ -4,52 +4,31 @@ const {
   register,
   login,
   Profile,
-  allUsers,
   deleteUser,
+  updateUsers,
   forgotPassword,
-  resetPassword
+  resetPassword,
 } = require("../controllers/UserController");
 const { userValidator } = require("../middleware/userValidator");
 const { protect } = require("../middleware/authMiddleware");
-const { adminAuthorization } = require("../middleware/adminAuthorization");
-const { superAdminAuthorization } = require("../middleware/superAdminAuthorization");
-const { blockUnblock, assignAdminRole } = require("../controllers/superAdminController");
-const { checkBlockedStatus } = require("../middleware/checkBlockedStatusMiddleware");
-const {verifyUser}=require("../controllers/verificationController");
 const { isVerified } = require('../middleware/isVerifiedMiddleware');
 const { createUser, updateUser } = require('../controllers/accountCreationController');
-const {authorizeRoles}=require("../middleware/accountCreationMiddleware")
+const {authorizeRoles}=require("../middleware/accountCreationMiddleware");
+const { checkBlockedStatus } = require('../middleware/checkBlockedStatusMiddleware');
 
 // Register a new user
-router.post("/", userValidator, register);
-
-// Assign admin role by super admin
-router.put('/:userId/assign-admin', superAdminAuthorization, assignAdminRole);
-// User verification
-router.put('/verify/:userId', protect, adminAuthorization, verifyUser);
-
+router.post("/", userValidator, register);   
 // User login
-router.post("/login",isVerified,login);
-
-// Get user profile
-router.get("/profile", protect, Profile);
-
-// Get all users (Admin or Super Admin only)
-router.get("/allUsers", protect, checkBlockedStatus, [adminAuthorization, superAdminAuthorization], allUsers);
-
-// Delete a user (Admin or Super Admin only)
-router.delete("/deleteUser/:id", protect, checkBlockedStatus, [adminAuthorization, superAdminAuthorization], deleteUser);
+router.post("/login",protect,isVerified,login);
+router.post("/AminLogin",login); 
+// Get user profile by currently logged account
+router.get("/profile", protect,checkBlockedStatus, Profile);
+router.put("/profile/:userId",protect,checkBlockedStatus,updateUsers)
 
 // Forgot password
-router.post('/forgot-password', forgotPassword);
-
+router.post('/forgot-password', forgotPassword); 
 // Reset password
 router.post('/reset-password', resetPassword);
-
-// Block or unblock user (Super Admin only)
-router.put("/block-unblock-user", protect, superAdminAuthorization, blockUnblock);
-
-
 //creating account for user by superAdmin and admin
 router.post('/createUser', authorizeRoles('SuperAdmin', 'Admin'), createUser);
 router.put('/updateUser/:id', authorizeRoles('SuperAdmin', 'Admin'), updateUser);

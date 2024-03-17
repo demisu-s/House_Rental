@@ -3,6 +3,9 @@ const connectDB=require("./config/db")
 const userRoutes = require('./routes/userRoute');
 // const houseModel = require("./models/houseModel");
 const houseRoutes = require('./routes/houseRoute');
+const adminRoutes = require('./routes/adminRoute');
+const superAdminRoutes=require('./routes/superAdminRoute')
+
 const app = express();
 
 require('dotenv').config();
@@ -14,6 +17,10 @@ app.use(express.json())
 //routes here
 app.use('/api/houses',houseRoutes)
 app.use('/api/users', userRoutes);
+app.use('/api/users', adminRoutes);
+app.use('/api/users', superAdminRoutes);
+
+
 // app.use('/api/house', houseRoutes);
 
 //starting server

@@ -11,6 +11,11 @@ const blockUnblock = async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
 
+        // Validate the 'blocked' field
+        if (typeof blocked !== 'boolean') {
+            return res.status(400).json({ error: "Invalid value for 'blocked'. Must be a boolean." });
+        }
+
         // Update the 'blocked' field of the user
         user.blocked = blocked;
         await user.save();
@@ -21,6 +26,7 @@ const blockUnblock = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
 const assignAdminRole = async (req, res) => {
     try {
       const { userId } = req.params;
@@ -34,9 +40,7 @@ const assignAdminRole = async (req, res) => {
       }
   
       // Update the user's role to Admin
-      user.role = 'Admin';
-      
-      // Save the updated user
+      user.role = 'Admin'; 
       await user.save();
   
       res.json({ message: `User with ID ${userId} is now assigned the Admin role` });

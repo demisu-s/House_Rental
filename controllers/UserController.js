@@ -48,7 +48,7 @@ const register = async (req, res) => {
     const user = await User.create({
       firstName,
       lastName,    
-      address,
+      address, 
       phone,
       email,
       password: hashedPassword,
@@ -94,6 +94,29 @@ const allUsers = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const updateUsers = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const updateData = req.body; // Assuming you pass update data in the request body
+
+    // Check if update data is provided
+    if (!updateData || Object.keys(updateData).length === 0) {
+      return res.status(400).json({ error: "Update data is required" });
+    }
+
+    // Find user by ID and update with provided data
+    const user = await User.findByIdAndUpdate(userId, updateData, { new: true });
+   
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 const deleteUser = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -116,7 +139,7 @@ const forgotPassword=async (req, res) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-          return res.status(404).json({ error: 'User not found' });
+          return res.status(404).json({ error: 'This email is not registered' });
       }
 
       // Generate reset token
@@ -172,6 +195,7 @@ module.exports = {
   allUsers,
   deleteUser,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  updateUsers
 };
    

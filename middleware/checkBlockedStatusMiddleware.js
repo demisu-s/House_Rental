@@ -1,7 +1,6 @@
-// Middleware function to check if the user is blocked
+
 const checkBlockedStatus = async (req, res, next) => {
     try {
-      // Assuming the user information is stored in req.user after authentication
       const { blocked } = req.user;
   
       // If the user is blocked, prevent access

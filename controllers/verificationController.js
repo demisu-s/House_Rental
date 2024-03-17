@@ -3,25 +3,29 @@ const User = require('../models/userModel');
 const verifyUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { role } = req.query; // Role to verify (landlord, broker, renter)
+    // Extract role from query parameters and convert to lowercase
+    const role = req.query.role ? req.query.role.trim().toLowerCase() : undefined;
+
+   
 
     // Validate the role parameter
-    if (!['Landlord', 'Broker', 'Tenant'].includes(role)) {
-      return res.status(400).json({ error: 'Invalid role specified' });
+    if (!role || !['landlord', 'broker', 'tenant'].includes(role)) {
+      return res.status(400).json({ error: 'Invalid or missing role specified' });
     }
-
+ 
     // Check if the user exists
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Check if the user's role matches the role to verify
-    if (user.role !== role) {
+   
+
+    // Ensure the user has the specified role
+    if (user.role.toLowerCase() !== role) {
       return res.status(400).json({ error: 'User role does not match the specified role for verification' });
     }
 
-    // Assume a verified field exists on the user model
     // Perform verification logic here (e.g., update user's status to verified)
     user.verified = true;
     await user.save();
