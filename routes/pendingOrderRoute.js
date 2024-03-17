@@ -1,19 +1,43 @@
 const express = require("express");
 const router = express.Router();
 const { protect } = require("../middleware/authMiddleware");
+const { tenantValidator } = require("../middleware/tenantValidator");
+const { landlordValidator } = require("../middleware/landlordValidator");
+const { brokerValidator } = require("../middleware/brokerValidator");
 const {
   createPendingOrder,
-  getAllPendingOrders,
-  getPendingOrderById,
-  updatePendingOrder,
-  deletePendingOrder,
+  getPendingOrders,
+  acceptPendingOrder,
+  rejectPendingOrder,
+  proposeCounterOffer,
 } = require("../controllers/pendingOrderController");
 
 // Routes for pending orders
-router.post("/", protect, createPendingOrder);
-router.get("/", protect, getAllPendingOrders);
-router.get("/:id", protect, getPendingOrderById);
-router.patch("/:id", protect, updatePendingOrder);
-router.delete("/:id", protect, deletePendingOrder);
+router.post("/", tenantValidator, protect, createPendingOrder);
+
+router.get(
+  "/:id",
+  [landlordValidator, brokerValidator],
+  protect,
+  getPendingOrders
+);
+router.post(
+  "/accept/:id",
+  [landlordValidator, brokerValidator],
+  protect,
+  acceptPendingOrder
+);
+router.post(
+  "/reject/:id",
+  [landlordValidator, brokerValidator],
+  protect,
+  rejectPendingOrder
+);
+router.post(
+  "/propose/:id",
+  [landlordValidator, brokerValidator],
+  protect,
+  proposeCounterOffer
+);
 
 module.exports = router;
