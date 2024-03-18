@@ -94,6 +94,41 @@ const allUsers = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+
+const searchUser = async (req, res) => {   
+  try {
+    let filter = {};
+
+    // Extract query parameters for filtering
+    const { role, name, email } = req.query;
+
+    // Build the filter object based on provided query parameters
+    if (role) {
+      filter.role = role;
+    }
+    if (name) {
+      filter.$or = [
+        { firstName: { $regex: name, $options: 'i' } }, // Case-insensitive search
+        { lastName: { $regex: name, $options: 'i' } }
+      ];
+    }
+    if (email) {
+      filter.email = { $regex: email, $options: 'i' }; // Case-insensitive search
+    }
+
+    // Find users based on the filter
+    const users = await User.find(filter);
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+
 const updateUsers = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -196,6 +231,7 @@ module.exports = {
   deleteUser,
   forgotPassword,
   resetPassword,
-  updateUsers
+  updateUsers,
+  searchUser
 };
    

@@ -8,6 +8,7 @@ const {
   updateUsers,
   forgotPassword,
   resetPassword,
+  searchUser,
 } = require("../controllers/UserController");
 const { userValidator } = require("../middleware/userValidator");
 const { protect } = require("../middleware/authMiddleware");
@@ -21,6 +22,8 @@ router.post("/", userValidator, register);
 // User login
 router.post("/login",protect,isVerified,login);
 router.post("/AminLogin",login); 
+//search user by role name and email
+router.get("/search",protect,searchUser)
 // Get user profile by currently logged account
 router.get("/profile", protect,checkBlockedStatus, Profile);
 router.put("/profile/:userId",protect,checkBlockedStatus,updateUsers)
