@@ -21,21 +21,20 @@ const { checkBlockedStatus } = require('../middleware/checkBlockedStatusMiddlewa
 router.post("/", userValidator, register);   
 // User login
 router.post("/login",protect,isVerified,login);
-router.post("/AminLogin",login); 
+router.post("/AdminLogin",protect,login); 
 //search user by role name and email
-router.get("/search",protect,searchUser)
+router.get("/search",protect,authorizeRoles('SuperAdmin','Admin'),searchUser)
 // Get user profile by currently logged account
 router.get("/profile", protect,checkBlockedStatus, Profile);
 router.put("/profile/:userId",protect,checkBlockedStatus,updateUsers)
 
-// Forgot password
+// Forgot password 
 router.post('/forgot-password', forgotPassword); 
 // Reset password
 router.post('/reset-password', resetPassword);
-//creating account for user by superAdmin and admin
-router.post('/createUser', authorizeRoles('SuperAdmin', 'Admin'), createUser);
-router.put('/updateUser/:id', authorizeRoles('SuperAdmin', 'Admin'), updateUser);
-router.delete('/deleteUser/:id', authorizeRoles('SuperAdmin', 'Admin'), deleteUser);
+
+
+
 
 
 module.exports = router;

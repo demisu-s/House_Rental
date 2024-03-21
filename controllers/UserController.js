@@ -51,7 +51,7 @@ const register = async (req, res) => {
       address, 
       phone,
       email,
-      password: hashedPassword,
+      password: hashedPassword, 
       role,
       profileImagePath: req.file.path
     });
@@ -131,7 +131,7 @@ const searchUser = async (req, res) => {
 
 const updateUsers = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params._id;
     const updateData = req.body; // Assuming you pass update data in the request body
 
     // Check if update data is provided
@@ -152,10 +152,13 @@ const updateUsers = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+
 const deleteUser = async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const user = await User.findByIdAndDelete(userId);
+    const userId = req.params._id;
+    const user = await User.findByIdAndDelete(_id);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });

@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 
 // Function to create user accounts
-const createUser = async (req, res) => {
+const createUserAccount = async (req, res) => {
   try {
     const { role } = req.user; // Assuming  middleware that sets req.user to the authenticated user
 
@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+const updateUserAccount = async (req, res) => {
     try {
       const { id } = req.params;
       const { role, _id } = req.user;
@@ -43,7 +43,7 @@ const updateUser = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
-  const deleteUser = async (req, res) => {
+  const deleteUserAccount = async (req, res) => {
     try {
       const { id } = req.params;
       const { role, _id } = req.user;
@@ -69,8 +69,8 @@ const updateUser = async (req, res) => {
 
   module.exports={
     
-    createUser,
-    updateUser,
-    updateUser
+    createUserAccount,
+    updateUserAccount,
+    deleteUserAccount
 
   }
