@@ -40,6 +40,29 @@ const houseSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Broker'
     },
+    availableDates: [
+        {
+          type: Date,
+          required: true,
+        },
+    ],
+    rentalRequests: [
+        {
+          startDate: {
+            type: Date,
+            required: true,
+          },
+          endDate: {
+            type: Date,
+            required: true,
+          },
+          renter: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+          },
+        },
+      ],
 },
 {
     Timestamps: true,

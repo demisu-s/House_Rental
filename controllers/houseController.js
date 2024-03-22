@@ -69,6 +69,19 @@ exports.newHouse = async (req, res) => {
     }
 }
 
+// Handle rental requests from renters 
+exports.createRentalRequest = asyncHandler(async (req, res) => { 
+    const house = await House.findById(req.params.id); 
+    const { startDate, endDate } = req.body;
+    if (house.availableDates.includes(startDate) && house.availableDates.includes(endDate)) { 
+        // Add rental request to house object 
+        house.rentalRequests.push({ startDate, endDate, renter: req.user.id }); 
+        await house.save(); 
+        return res.status(200).json(house); 
+    } 
+    return res.status(400).json({ error: "House is not available for specified dates" }); 
+});
+
 exports.updateHouse = async (req, res) => {
     const house = {
         title: req.body.title,
