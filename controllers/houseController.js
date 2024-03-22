@@ -82,6 +82,18 @@ exports.createRentalRequest = asyncHandler(async (req, res) => {
     return res.status(400).json({ error: "House is not available for specified dates" }); 
 });
 
+//Landlords/Brokers can view details of all rental requests for their houses
+exports.getRentalRequests = asyncHandler(async (req, res) => {
+    const house = await House.findById(req.params.id);
+  
+    if (house.landlord.id.equals(req.user.id) || house.broker.id.equals(req.user.id)) {
+      const rentalRequests = house.rentalRequests;
+      return res.status(200).json(rentalRequests);
+    }
+  
+    return res.status(403).json({ error: 'You are not authorized to view the rental requests for this house.' });
+  });
+
 exports.updateHouse = async (req, res) => {
     const house = {
         title: req.body.title,
