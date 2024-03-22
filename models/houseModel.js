@@ -40,6 +40,10 @@ const houseSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Broker'
     },
+    status: {
+        type: String,
+        required: true
+    },
     availableDates: [
         {
           type: Date,

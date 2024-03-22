@@ -87,12 +87,113 @@ exports.getRentalRequests = asyncHandler(async (req, res) => {
     const house = await House.findById(req.params.id);
   
     if (house.landlord.id.equals(req.user.id) || house.broker.id.equals(req.user.id)) {
-      const rentalRequests = house.rentalRequests;
-      return res.status(200).json(rentalRequests);
+        const rentalRequests = house.rentalRequests.map(req => {
+            return {
+              id: req._id,
+              startDate: req.startDate,
+              endDate: req.endDate,
+              renter: {
+                id: req.renter._id,
+                name: req.renter.name,
+                email: req.renter.email,
+              },
+            };
+          });
+        return res.status(200).json(rentalRequests);
     }
   
     return res.status(403).json({ error: 'You are not authorized to view the rental requests for this house.' });
   });
+
+  //approve
+  exports.approveRentalRequest = asyncHandler(async (req, res) => {
+    const house = await House.findById(req.params.id);
+    
+    if (!house.landlord.equals(req.user.id) && !house.broker.equals(req.user.id)) {
+        return res.status(401).json({ error: 'Unauthorized user' });
+    }
+    
+    const rentalRequest = house.rentalRequests.id(req.params.rentalRequestId);
+  
+    if (!rentalRequest) {
+      return res.status(404).json({ error: 'Rental request not found' });
+    }
+  
+    if (house.status !== 'available') {
+      return res.status(400).json({ error: 'House is not available for rental requests' });
+    }
+  
+    if (house.status !== 'rented') {
+      rentalRequest.set({
+        approved: true,
+        approvedAt: new Date(),
+      });
+      house.status = 'rented';
+      house.startDate = rentalRequest.startDate;
+      house.endDate = rentalRequest.endDate;
+      await house.save();
+      return res.status(200).json({ message: 'Rental request approved' });
+    }
+  
+    return res.status(400).json({ error: 'House is already rented for the specified dates' });
+  });
+
+  //reject
+  exports.rejectRentalRequest = asyncHandler(async (req, res) => {
+    const house = await House.findById(req.params.id);
+    
+    if (!house.landlord.equals(req.user.id) && !house.broker.equals(req.user.id)) {
+        return res.status(401).json({ error: 'Unauthorized user' });
+    }
+    
+    const rentalRequest = house.rentalRequests.id(req.params.rentalRequestId);
+  
+    if (!rentalRequest) {
+      return res.status(404).json({ error: 'Rental request not found' });
+    }
+  
+    if (house.status !== 'available') {
+      return res.status(400).json({ error: 'House is not available for rental requests' });
+    }
+  
+    if (house.status !== 'rented') {
+      rentalRequest.remove();
+      await house.save();
+      returnres.status(200).json({ message: 'Rental request rejected' });
+    }
+  
+    return res.status(400).json({ error: 'House is already rented for the specified dates' });
+  });
+
+  //propose
+  exports.proposeAlternativeDates = asyncHandler(async (req, res) => {
+    const house = await House.findById(req.params.id);
+    
+    if (!house.landlord.equals(req.user.id) && !house.broker.equals(req.user.id)) {
+        return res.status(401).json({ error: 'Unauthorized user' });
+    }
+    
+    const rentalRequest = house.rentalRequests.id(req.params.rentalRequestId);
+  
+    if (!rentalRequest) {
+      return res.status(404).json({ error: 'Rental request not found' });
+    }
+  
+    if (house.status !== 'available') {
+      return res.status(400).json({ error: 'House is not available for rental requests' });
+    }
+  
+    if (house.status !== 'rented') {
+      rentalRequest.set({
+        proposedAlternativeDates: req.body.alternativeDates,
+      });
+      await house.save();
+      return res.status(200).json({ message: 'Alternative dates proposed' });
+    }
+  
+    return res.status(400).json({ error: 'House is already rented for the specified dates' });
+  });
+
 
 exports.updateHouse = async (req, res) => {
     const house = {
