@@ -8,15 +8,15 @@ const { allUsers, deleteUser, updateUsers } = require('../controllers/UserContro
 
 
 // Block or unblock user by Super Admin  including admin
-router.put("/block-unblock-user", protect, superAdminAuthorization, blockUnblock);
+// router.put("/block-unblock-user/:userId", protect, superAdminAuthorization, blockUnblock);
 
 // Assign admin role by super admin
-router.put('/:userId/assign-admin', superAdminAuthorization, assignAdminRole);
+// router.put('/assign-admin/:userId',protect, superAdminAuthorization, assignAdminRole);
 // Get all users by super Admin    
-router.get("/allUsers", protect, checkBlockedStatus, superAdminAuthorization, allUsers);
+// router.get("/allUsers", protect, checkBlockedStatus, superAdminAuthorization, allUsers);
 // Delete a user by super Admin 
-router.delete("/deleteUser/:id", protect, checkBlockedStatus, superAdminAuthorization, deleteUser);
+// router.delete("/deleteUser/:id", protect, checkBlockedStatus, superAdminAuthorization, deleteUser);
 //update a user by super Admin
-router.put("/updateUser/:id",protect, checkBlockedStatus, superAdminAuthorization,updateUsers)
-
+// router.put("/updateUser/:id",protect, checkBlockedStatus, superAdminAuthorization,updateUsers)
+ 
 module.exports=router

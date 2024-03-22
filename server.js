@@ -17,8 +17,8 @@ app.use(express.json())
 //routes here
 app.use('/api/houses',houseRoutes)
 app.use('/api/users', userRoutes);
-app.use('/api/users', adminRoutes);
-app.use('/api/users', superAdminRoutes);
+// app.use('/api/users', adminRoutes);
+// app.use('/api/users', superAdminRoutes);
 
 
 // app.use('/api/house', houseRoutes);

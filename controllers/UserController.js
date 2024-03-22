@@ -131,7 +131,7 @@ const searchUser = async (req, res) => {
 
 const updateUsers = async (req, res) => {
   try {
-    const userId = req.params._id;
+    const userId = req.params.id;
     const updateData = req.body; // Assuming you pass update data in the request body
 
     // Check if update data is provided
@@ -141,34 +141,39 @@ const updateUsers = async (req, res) => {
 
     // Find user by ID and update with provided data
     const user = await User.findByIdAndUpdate(userId, updateData, { new: true });
-   
+
     // Check if user exists
     if (!user) {
+      console.log(`User with ID ${userId} not found`);
       return res.status(404).json({ error: "User not found" });
     }
 
+    console.log(`User with ID ${userId} updated successfully`);
     res.json(user);
   } catch (error) {
+    console.error(error); // Log the error for debugging
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 
 
 const deleteUser = async (req, res) => {
   try {
-    const userId = req.params._id;
-    const user = await User.findByIdAndDelete(_id);
+    const userId = req.params.id;
+    const user = await User.findByIdAndDelete(userId); 
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    res.json(user);
+    res.json({message:"user deleted successfully"});
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 
 const forgotPassword=async (req, res) => {
