@@ -12,9 +12,9 @@ const {
 } = require("../controllers/reportController");
 
 // Routes for reports
-router.post("/", [landlordAuthorization, brokerAuthorization, tenantAuthorization], protect, createReport);
-router.get("/:id", [landlordAuthorization, brokerAuthorization], protect, getReports);
-router.put("/:id", [landlordAuthorization, brokerAuthorization], protect, updateReport); 
-router.delete("/:id",[landlordAuthorization, brokerAuthorization], protect, deleteReport);
+router.post("/",protect, [brokerAuthorization,landlordAuthorization, tenantAuthorization], createReport);
+router.get("/:id",protect, [brokerAuthorization,landlordAuthorization],getReports);
+router.put("/:id",protect, [brokerAuthorization,landlordAuthorization],updateReport); 
+router.delete("/:id",protect,[brokerAuthorization,landlordAuthorization],deleteReport);
 
 module.exports = router;

@@ -38,7 +38,7 @@ router.post('/forgot-password', forgotPassword);
 // Reset password
 router.post('/reset-password', resetPassword);
 
-// Assign admin role by super admin
+// Assign admin role by super admin 
 router.put('/assign-admin/:userId',protect, superAdminAuthorization, assignAdminRole);
 
 

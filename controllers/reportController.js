@@ -6,7 +6,7 @@ const Notification = require("../models/notificationModel");
 // function to send notification
 async function sendNotification(submitterID, status) {
   try {
-    // Create a new notification
+    // Create a new notification 
     const notification = new Notification({
       recipient: submitterID,
       message: `Your report status has been updated to ${status}.`,

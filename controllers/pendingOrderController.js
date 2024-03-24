@@ -1,7 +1,7 @@
 
 const asyncHandler = require("express-async-handler");
 const PendingOrder = require("../models/pendingOrderModel");
-const asyncHandler = require("express-async-handler");
+
 
 const createNotification = async (recipientId, message, details, status) => {
   try {
@@ -101,13 +101,13 @@ const getPendingOrders = asyncHandler(async (req, res) => {
         firstName: order.tenantID.firstName,
         lastName: order.tenantID.lastName,
         email: order.tenantID.email,
-        phoneNumber: order.tenantID.phoneNumber,
+        phone: order.tenantID.phone,
         address: order.tenantID.address,
       },
       bidPrice: order.bidPrice,
       dateSubmitted: order.date,
       house: {
-        location: order.houseEntityID.location,
+        address: order.houseEntityID.address,
       },
     }));
     res.json(formattedPendingOrders);
