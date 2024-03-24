@@ -7,6 +7,10 @@ const PendingOrderSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    role: {
+      type: String,
+      required: true,
+    },
     date: {
       type: Date,
       required: true,
@@ -14,6 +18,10 @@ const PendingOrderSchema = new mongoose.Schema(
     bidPrice: {
       type: Number,
       required: true,
+      validate: {
+        validator: (value) => value > 0,
+        message: "Bid price must be a positive number",
+      },
       validate: {
         validator: (value) => value > 0,
         message: "Bid price must be a positive number",
@@ -27,7 +35,13 @@ const PendingOrderSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["Pending", "Approved", "Rejected", "Proposed", "Cancelled"],
+      enum: ["Pending", "Approved", "Rejected", "Proposed", "Cancelled"],
       default: "Pending",
+    },
+    role: {
+      type: String,
+      enum: ["Landlord", "Tenant", "Admin", "Broker", "SuperAdmin"],
+      default: "Tenant",
     },
   },
   {
@@ -36,4 +50,3 @@ const PendingOrderSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("PendingOrder", PendingOrderSchema);
-

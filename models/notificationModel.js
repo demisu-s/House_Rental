@@ -12,6 +12,10 @@ const NotificationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    details: {
+      type: Object,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["unread", "read"],

@@ -1,42 +1,61 @@
-
-const HouseSchema = new mongoose.Schema(
+const mongoose = require("mongoose");
+const houseSchema = mongoose.Schema(
   {
-    // need to add some taskss
     title: {
       type: String,
       required: true,
     },
     description: {
       type: String,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    square_feet: {
+      type: Number,
+    },
+    bedrooms: {
+      type: Number,
+    },
+    bathrooms: {
+      type: Number,
       required: true,
     },
     price: {
       type: Number,
       required: true,
     },
-    location: {
+    property_type: {
       type: String,
-      required: true,
+    },
+    houseImagePaths: {
+      type: Buffer,
+      default: "",
+    },
+
+    broker: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", //Reference to the user model
     },
     landlord: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User", // Reference to the user model
-      //required: true,
-    },
-    broker: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Reference to the user model
-      //required: true,
+      //   required: true,
     },
     status: {
       type: String,
       enum: ["available", "rented", "unavailable"],
       default: "available",
     },
+    isAvailable: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
-    timestamps: true,
+    Timestamps: true,
   }
 );
 
-module.exports = mongoose.model("House", HouseSchema);
+module.exports = mongoose.model("House", houseSchema);

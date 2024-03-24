@@ -4,20 +4,36 @@ const { protect } = require("../middleware/authMiddleware");
 
 const {
   registerHouse,
-  getHouses,
-  getHouseById,
-  updateHouse,
-  deleteHouse,
+  getAllHouse,
+  getAllHouses,
+  updateHouseById,
+  deleteHouseById,
 } = require("../controllers/houseController");
 
-const { adminValidator } = require("../middleware/adminValidator");
-const { landlordValidator } = require("../middleware/landlordValidator");
+const { adminAuthorization } = require("../middleware/adminAuthorization");
+const {
+  landlordAuthorization,
+} = require("../middleware/landlordAuthorization");
+const { brokerAuthorization } = require("../middleware/brokerAuthorization");
+const {
+  landlordAndBrokerMiddleware,
+} = require("../middleware/landlordAndBrokerMiddleware");
 
 // Routes for houses
-router.post("/", protect, landlordValidator, registerHouse);
-router.get("/", getHouses);
-router.get("/:id", getHouseById); // Get a specific house by ID
-router.put("/:id", protect, landlordValidator, updateHouse);
-router.delete("/:id", protect, landlordValidator, deleteHouse);
+router.post("/", protect, landlordAndBrokerMiddleware, registerHouse);
+router.get("/", getAllHouses);
+router.get("/yourHouse", protect, getAllHouse); // Get a specific house by ID only broker or landlord can see
+router.put(
+  "/:id",
+  protect,
+  [landlordAuthorization, brokerAuthorization],
+  updateHouseById
+);
+router.delete(
+  "/:id",
+  protect,
+  [landlordAuthorization, brokerAuthorization],
+  deleteHouseById
+);
 
 module.exports = router;
