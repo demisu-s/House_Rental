@@ -2,12 +2,15 @@ const express = require("express");
 const router = express.Router();
 const { protect } = require("../middleware/authMiddleware");
 
-const {registerHouse,
+const {
+    registerHouse,
     getAllHouse,
     getAllHouses,
     updateHouseById,
-    deleteHouseById,searchHouses,
-    getHouseById,markHouseUnavailable} = require("../controllers/houseController");
+    deleteHouseById,
+    searchHouses,
+    getHouseById,
+    markHouseUnavailable} = require("../controllers/houseController");
 
 const { adminAuthorization } = require("../middleware/adminAuthorization");
 const { landlordAuthorization } = require("../middleware/landlordAuthorization");
