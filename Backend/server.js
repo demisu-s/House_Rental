@@ -1,10 +1,10 @@
 const express = require("express");
 const connectDB=require("./config/db")
-const userRoutes = require('./routes/userRoute');
-const houseRoutes = require('./routes/houseRoute');
-const reportRoutes=require('./routes/reportRoute')
-const feedbackRouters=require('./routes/feedbackRoute')
-const orderRoutes=require('./routes/pendingOrderRoute')
+const userRoutes = require('../routes/userRoute');
+const houseRoutes = require('../routes/houseRoute');
+const reportRoutes=require('../routes/reportRoute')
+const feedbackRouters=require('../routes/feedbackRoute')
+const orderRoutes=require('../routes/pendingOrderRoute')
 
 const app = express();
 
