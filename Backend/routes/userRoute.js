@@ -10,17 +10,19 @@ const {
   resetPassword,
   searchUser,
   allUsers,
-} = require("../../controllers/UserController");
-const { userValidator } = require("../../middleware/userValidator");
-const { protect } = require("../../middleware/authMiddleware");
-const { isVerified } = require('../../middleware/isVerifiedMiddleware');
-const { createUser, updateUser, createUserAccount, updateUserAccount, deleteUserAccount } = require('../../controllers/accountCreationController');
-const {authorizeRoles}=require("../../middleware/accountCreationMiddleware");
-const { checkBlockedStatus } = require('../../middleware/checkBlockedStatusMiddleware');
-const { assignAdminRole, blockUnblock } = require('../../controllers/blockUserController');
-const { superAdminAuthorization } = require('../../middleware/superAdminAuthorization');
-const { adminAuthorization } = require('../../middleware/adminAuthorization');
-const { verifyUser } = require('../../controllers/verificationController');
+} = require("../controllers/UserController");
+const { userValidator } = require("../middleware/userValidator");
+const { protect } = require("../middleware/authMiddleware");
+const { isVerified } = require('../middleware/isVerifiedMiddleware');
+
+const { createUser, updateUser, createUserAccount, updateUserAccount, deleteUserAccount } = require('../controllers/accountCreationController');
+const {authorizeRoles}=require("../middleware/accountCreationMiddleware");
+const { checkBlockedStatus } = require('../middleware/checkBlockedStatusMiddleware');
+const { assignAdminRole, blockUnblock } = require('../controllers/blockUserController');
+const { superAdminAuthorization } = require('../middleware/superAdminAuthorization');
+const { adminAuthorization } = require('../middleware/adminAuthorization');
+const { verifyUser } = require('../controllers/verificationController');
+
 
 // Register a new user
 router.post("/", userValidator, register);   

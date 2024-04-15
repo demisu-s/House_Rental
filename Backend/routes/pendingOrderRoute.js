@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();  
-const { protect } = require("../../middleware/authMiddleware");
-const { tenantAuthorization } = require("../../middleware/tenantAuthorization");
-const { landlordAuthorization } = require("../../middleware/landlordAuthorization");
-const { brokerAuthorization } = require("../../middleware/brokerAuthorization");
+const { protect } = require("../middleware/authMiddleware");
+const { tenantAuthorization } = require("../middleware/tenantAuthorization");
+const { landlordAuthorization } = require("../middleware/landlordAuthorization");
+const { brokerAuthorization } = require("../middleware/brokerAuthorization");
 const {
   createPendingOrder,
   getPendingOrders,
   acceptPendingOrder, 
   rejectPendingOrder,
   proposeCounterOffer,
-} = require("../../controllers/pendingOrderController");
+} = require("../controllers/pendingOrderController");
 
 // Routes for pending orders
 router.post("/",protect, tenantAuthorization, createPendingOrder); 

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { protect } = require("../../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
 const {
     registerHouse,
@@ -10,13 +10,13 @@ const {
     deleteHouseById,
     searchHouses,
     getHouseById,
-    markHouseUnavailable} = require("../../controllers/houseController");
+    markHouseUnavailable} = require("../controllers/houseController");
 
-const { adminAuthorization } = require("../../middleware/adminAuthorization");
-const { landlordAuthorization } = require("../../middleware/landlordAuthorization");
-const {brokerAuthorization}=require("../../middleware/brokerAuthorization")
-const {tenantAuthorization}=require('../../middleware/tenantAuthorization')
-const {superAdminAuthorization}=require('../../middleware/superAdminAuthorization')
+const { adminAuthorization } = require("../middleware/adminAuthorization");
+const { landlordAuthorization } = require("../middleware/landlordAuthorization");
+const {brokerAuthorization}=require("../middleware/brokerAuthorization")
+const {tenantAuthorization}=require('../middleware/tenantAuthorization')
+const {superAdminAuthorization}=require('../middleware/superAdminAuthorization')
 
 // Routes for houses
 router.post("/", protect, (landlordAuthorization,brokerAuthorization), registerHouse);

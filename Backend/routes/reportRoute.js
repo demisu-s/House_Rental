@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { protect } = require("../../middleware/authMiddleware");
-const {landlordAuthorization}=require("../../middleware/landlordAuthorization")
-const {brokerAuthorization}=require("../../middleware/brokerAuthorization")
-const {tenantAuthorization}=require("../../middleware/tenantAuthorization")
+const { protect } = require("../middleware/authMiddleware");
+const {landlordAuthorization}=require("../middleware/landlordAuthorization")
+const {brokerAuthorization}=require("../middleware/brokerAuthorization")
+const {tenantAuthorization}=require("../middleware/tenantAuthorization")
 const {
   createReport,
   getReports,
   updateReport,
   deleteReport,
-} = require("../../controllers/reportController");
+} = require("../controllers/reportController");
 
 // Routes for reports
 router.post("/",protect, [brokerAuthorization,landlordAuthorization, tenantAuthorization], createReport);
