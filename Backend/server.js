@@ -16,11 +16,9 @@ connectDB()
 const port = process.env.PORT || 4000;
 app.use(express.json())
 
-// Use CORS middleware with the proper options
-app.use(cors({
-    origin: 'http://localhost:3000', // Allow requests from this origin
-    credentials: true // Allow sending cookies from the frontend
-  }));
+app.use(cors());
+
+
 
 //routes here
 app.use('/api/houses',houseRoutes)
