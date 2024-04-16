@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDB=require("./config/db")
+const cors = require("cors"); // Import the CORS middleware
 const userRoutes = require('./routes/userRoute');
 const houseRoutes = require('./routes/houseRoute');
 const reportRoutes=require('./routes/reportRoute')
@@ -7,13 +8,19 @@ const feedbackRouters=require('./routes/feedbackRoute')
 
 const orderRoutes=require('./routes/pendingOrderRoute')
 
-const app = express();
+const app = express(); 
 
 require('dotenv').config();
 connectDB()
 
 const port = process.env.PORT || 4000;
 app.use(express.json())
+
+// Use CORS middleware with the proper options
+app.use(cors({
+    origin: 'http://localhost:3000', // Allow requests from this origin
+    credentials: true // Allow sending cookies from the frontend
+  }));
 
 //routes here
 app.use('/api/houses',houseRoutes)
