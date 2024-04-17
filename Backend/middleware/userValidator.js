@@ -8,7 +8,7 @@ const userValidator = (req, res, next) => {
         phone: Joi.number(),  
         email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
-        // role: Joi.string().valid("Landlord",'Tenant', 'Admin', 'Broker', 'SuperAdmin',),
+        role: Joi.string().valid("Landlord",'Tenant', 'Admin', 'Broker', 'SuperAdmin',),
         profileImagePath:Joi.string().optional()
     });     
 

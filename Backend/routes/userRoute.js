@@ -25,7 +25,7 @@ const { verifyUser } = require('../controllers/verificationController');
 
 
 // Register a new user
-router.post("/", userValidator, register);   
+router.post("/", register);   
 // User login
 router.post("/login",protect,isVerified,login);
 router.post("/AdminLogin",protect,login); 
