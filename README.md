@@ -141,7 +141,7 @@ Install my-project with npm
 Clone the project
 
 ```bash
-  git clone https://github.com/TuringCollegeSubmissions/ezeben-WD.4B.4.4
+  git@github.com:demisu-s/House_Rental_Yenetta.git
 ```
 
 Go to the project directory
@@ -199,9 +199,9 @@ Distributed under the no License.
 <!-- Contact -->
 ## Contact
 
-Eyob Zebene - [@Eyob_Zebene](https://www.linkedin.com/in/eyob-zebene-b8359b21a/) - eyobzebene3580@gmail.com
+Damisu Sefu - [@Damisu Sefu](https://www.linkedin.com/in/damisu-sefu-5545b223a/) - damisusefu@gmail.com
 
-Project Link: [https://github.com/TuringCollegeSubmissions/ezeben-WD.4B.4.4](https://github.com/TuringCollegeSubmissions/ezeben-WD.4B.4.4)
+Project Link: https://github.com/demisu-s/House_Rental_Yenetta
 
 <!-- Acknowledgments -->
 ## Acknowledgements
