@@ -1,0 +1,9 @@
+STL REview
+- make the app accessible for public user
+- work on sells as well
+- updating the forms to use a more consistent way of rendering using javascript instead of using JSX.
+- use a formatting tool and set up it to the project
+
+Peer Review
+- write more tests
+- working on marketing

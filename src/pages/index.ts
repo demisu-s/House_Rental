@@ -1,0 +1,10 @@
+export { ErrorPage } from "./error";
+export { Login } from "./auth/Login";
+export { Register } from "./auth/Register";
+export { LandingPage } from "./landing/LandingPage";
+export { Dashboard } from "./dashboard";
+export { AddProperty } from "./properties/AddProperty";
+export { SellProperty } from "./posts/SellProperty";
+export { RentProperty } from "./posts/RentingProperty";
+export { Settings } from "./settings/Settings";
+export { EditProfile } from "./settings/EditProfile";
