@@ -4,7 +4,7 @@
   <h1>Live Dream</h1>
   
   <p>
-    The right place to find your dream home! 
+    The right place to find your dream home.! 
   </p>
 
   
